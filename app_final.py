@@ -3,11 +3,48 @@ import cv2
 import numpy as np
 import fitz  # PyMuPDF
 from PIL import Image
-import sys
-import pytesseract
+import tempfile
 import os
-from datetime import datetime, timedelta
 
+# --- 1. PAGE CONFIGURATION ---
+st.set_page_config(
+    page_title="DocChecker - Stop Missing Signatures",
+    page_icon="✍️",
+    layout="centered"
+)
+
+# --- 2. CSS STYLING (The Professional Look) ---
+st.markdown("""
+    <style>
+        .main-title {font-size: 2.5rem; font-weight: 700; color: #0E1117; text-align: center; margin-top: -50px;}
+        .sub-title {font-size: 1.2rem; color: #555; text-align: center; margin-bottom: 2rem;}
+        .pain-point {background-color: #fff3cd; padding: 15px; border-radius: 8px; border: 1px solid #ffeeba; text-align: center; color: #856404; font-weight: 500;}
+        .privacy-box {background-color: #f8f9fa; padding: 20px; border-radius: 10px; font-size: 0.9rem; text-align: left; border: 1px solid #dee2e6; margin-top: 30px;}
+        .cta-text {text-align: center; font-weight: bold; font-size: 1.1rem; color: #222;}
+        .stButton>button {width: 100%; border-radius: 5px; height: 50px; font-weight: bold;}
+    </style>
+""", unsafe_allow_html=True)
+
+# --- 3. HERO SECTION ---
+st.markdown('<div class="main-title">Doc<span style="color:#FF4B4B">Checker</span></div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-title">The "Safety Net" for Loan Signing Agents.<br>Scan your Loan Package before you drop it at FedEx.</div>', unsafe_allow_html=True)
+
+# --- 4. THE PAIN POINT ---
+st.markdown("""
+<div class="pain-point">
+    🚫 <b>Stop the "Shame Ride" back to the borrower.</b><br>
+    One missing initial causes a Funding Condition. Use DocChecker to spot it instantly.
+</div>
+<br>
+""", unsafe_allow_html=True)
+
+# --- 5. THE TOOL INTERFACE ---
+st.markdown('<div class="cta-text">👇 Upload Scanned Loan Package (PDF)</div>', unsafe_allow_html=True)
+
+uploaded_file = st.file_uploader("", type=["pdf", "jpg", "png"])
+
+if uploaded_file is not None:
+    st.write("🔄 **Processing Document...**")
 # ==========================================
 # 1. CONFIGURATION & SETUP
 # ==========================================
@@ -225,3 +262,19 @@ if uploaded_file is not None:
         st.success("🎉 Perfect! No missing signatures detected in this packet.")
     else:
         st.error(f"🚨 Found {missed_count} pages with missing signatures. Please review above.")
+st.markdown("---")
+
+# --- 6. PRIVACY POLICY (Footer) ---
+st.subheader("🔒 Bank-Grade Privacy")
+st.markdown("""
+<div class="privacy-box">
+    <strong>We know Title Companies are strict. Here is our security promise:</strong>
+    <ul>
+        <li><strong>RAM-Only Processing:</strong> Your files are processed in temporary memory and wiped immediately.</li>
+        <li><strong>No Cloud Storage:</strong> We do not save, archive, or view your Loan Packages.</li>
+        <li><strong>Encrypted:</strong> All data is transmitted via secure SSL (HTTPS).</li>
+    </ul>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("<br><center><small>© 2025 DocChecker.co | Built for Notaries</small></center>", unsafe_allow_html=True)
