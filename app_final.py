@@ -5,6 +5,7 @@ import fitz  # PyMuPDF
 from PIL import Image
 import tempfile
 import os
+import sys
 
 # --- 1. PAGE CONFIGURATION ---
 st.set_page_config(
