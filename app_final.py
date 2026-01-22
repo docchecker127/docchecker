@@ -1,3 +1,4 @@
+import sys
 import streamlit as st
 import cv2
 import numpy as np
@@ -5,7 +6,6 @@ import fitz  # PyMuPDF
 from PIL import Image
 import tempfile
 import os
-import sys
 
 # --- 1. PAGE CONFIGURATION ---
 st.set_page_config(
@@ -279,3 +279,4 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("<br><center><small>© 2025 DocChecker.co | Built for Notaries</small></center>", unsafe_allow_html=True)
+
