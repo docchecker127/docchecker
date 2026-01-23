@@ -124,9 +124,78 @@ st.markdown("""
 
 st.markdown('<div class="cta-text">👇 Upload Scanned Loan Package (PDF)</div>', unsafe_allow_html=True)
 
-uploaded_file = st.file_uploader("", type=["pdf"])
+import os # Add this line at the very top with other imports
 
-if uploaded_file is not None:
+# ... (Keep your imports and set_page_config as they are) ...
+
+# --- DELETE EVERYTHING FROM HERE UNTIL 'doc = fitz.open(...)' AND PASTE THIS ---
+
+st.markdown("### 📂 Step 1: Upload Document or Try Samples")
+
+# 1. User Choice (Radio Button)
+mode = st.radio("Choose Input Method:", ["📤 Upload My Own File", "🧪 Try Sample Documents (Safe Mode)"], horizontal=True)
+
+target_file_bytes = None 
+target_filename = ""
+
+# --- OPTION A: UPLOAD (Inga dhaan Upload Button Irukku!) ---
+if mode == "📤 Upload My Own File":
+    uploaded_file = st.file_uploader("Upload your Loan Package (PDF)", type=["pdf"])
+    
+    if uploaded_file:
+        target_file_bytes = uploaded_file.read()
+        target_filename = uploaded_file.name
+
+# --- OPTION B: SAMPLE (Inga Dropdown Irukku!) ---
+elif mode == "🧪 Try Sample Documents (Safe Mode)":
+    sample_choice = st.selectbox(
+        "Select a Test Scenario:",
+        [
+            "Select a scenario...",
+            "✅ Fully Signed Loan Package",
+            "❌ Unsigned / Empty Form",
+            "⚠️ Partially Signed / Missed One"
+        ]
+    )
+    
+    # File name mapping
+    filename_map = {
+        "✅ Fully Signed Loan Package": "sample_signed.pdf",
+        "❌ Unsigned / Empty Form": "sample_unsigned.pdf",
+        "⚠️ Partially Signed / Missed One": "sample_partial.pdf"
+    }
+
+    if sample_choice in filename_map:
+        fname = filename_map[sample_choice]
+        
+        # SMART CHECK: Check inside 'samples/' folder AND main folder
+        if os.path.exists(f"samples/{fname}"):
+            file_path = f"samples/{fname}"
+        elif os.path.exists(fname):
+            file_path = fname
+        else:
+            file_path = None
+            st.error(f"⚠️ Error: Could not find '{fname}'. Please upload it to GitHub!")
+
+        if file_path:
+            with open(file_path, "rb") as f:
+                target_file_bytes = f.read()
+            target_filename = sample_choice
+            st.success(f"Loaded: {sample_choice}")
+            st.caption("🔒 Privacy Mode: Using dummy file from server.")
+
+# --- COMMON PROCESSING LOGIC ---
+if target_file_bytes is not None:
+    st.divider()
+    st.write(f"🔍 **Scanning: {target_filename}**")
+    
+    # Pass the BYTES to fitz
+    doc = fitz.open(stream=target_file_bytes, filetype="pdf")
+
+    # ... (Rest of your original code continues below) ...
+    # ... total_pages = len(doc) ...
+
+if target_file_bytes is not None:
     st.divider()
     st.write("🔍 **Scanning Document (Please Wait)...**")
     
@@ -237,4 +306,5 @@ with st.expander("📜 Disclaimer, Privacy & Terms of Use (Read First)", expande
     **4. Limitation of Liability:** By using this site, you agree to hold the developer harmless from any claims, damages, or losses arising from its use.
     """)
     st.caption("© 2026 Built independently. Not affiliated with any government or banking institution.")
+
 
