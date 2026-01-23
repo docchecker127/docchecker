@@ -223,3 +223,17 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("<br><center><small>© 2025 DocChecker.co | Built for Notaries</small></center>", unsafe_allow_html=True)
+# --- FOOTER & DISCLAIMER ---
+st.markdown("---")
+with st.expander("📜 Disclaimer, Privacy & Terms of Use (Read First)", expanded=False):
+    st.markdown("""
+    **1. No Warranty (As-Is):** This tool is provided for **informational and testing purposes only**. It is built by an indie developer and comes with **NO WARRANTY**. We do not guarantee 100% accuracy. You must manually verify all documents before submission.
+    
+    **2. Not Legal Advice:** The results from this tool do not constitute legal or professional advice. The developer is not responsible for any rejected loans, funding conditions, or financial losses caused by reliance on this tool.
+    
+    **3. Privacy & Data Security:** * **Zero Storage:** We do not save, store, or share your files. Files are processed in RAM and deleted immediately after analysis.
+    * **User Responsibility:** You act as the Data Controller. Please **REDACT (cover/hide)** sensitive information (SSN, Bank Account Numbers, Names) before uploading if you are concerned about data privacy. By uploading unredacted files, you assume full responsibility for any risks.
+    
+    **4. Limitation of Liability:** By using this site, you agree to hold the developer harmless from any claims, damages, or losses arising from its use.
+    """)
+    st.caption("© 2026 Built independently. Not affiliated with any government or banking institution.")
