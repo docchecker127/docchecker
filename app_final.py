@@ -199,7 +199,7 @@ if target_file_bytes is not None:
     st.divider()
     st.write("🔍 **Scanning Document (Please Wait)...**")
     
-    doc = fitz.open(stream=uploaded_file.read(), filetype="pdf")
+    doc = fitz.open(stream=target_file_bytes, filetype="pdf")
     total_pages = len(doc)
     
     progress_bar = st.progress(0)
@@ -306,5 +306,6 @@ with st.expander("📜 Disclaimer, Privacy & Terms of Use (Read First)", expande
     **4. Limitation of Liability:** By using this site, you agree to hold the developer harmless from any claims, damages, or losses arising from its use.
     """)
     st.caption("© 2026 Built independently. Not affiliated with any government or banking institution.")
+
 
 
