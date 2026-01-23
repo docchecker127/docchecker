@@ -58,8 +58,8 @@ def calculate_rescission(sign_date_str):
 def check_signature_final(img_array):
     h, w = img_array.shape
     # Top 15% (skips logos) to Bottom 95%, Left 20% to Right 95%
-    y_start, y_end = int(h * 0.15), int(h * 0.95)
-    x_start, x_end = int(w * 0.20), int(w * 0.95)
+    y_start, y_end = int(h * 0.15), int(h * 0.98)
+    x_start, x_end = int(w * 0.15), int(w * 0.95)
     roi = img_array[y_start:y_end, x_start:x_end]
     
     thresh = cv2.adaptiveThreshold(roi, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 21, 10)
@@ -237,3 +237,4 @@ with st.expander("📜 Disclaimer, Privacy & Terms of Use (Read First)", expande
     **4. Limitation of Liability:** By using this site, you agree to hold the developer harmless from any claims, damages, or losses arising from its use.
     """)
     st.caption("© 2026 Built independently. Not affiliated with any government or banking institution.")
+
